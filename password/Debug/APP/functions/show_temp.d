@@ -1,5 +1,5 @@
-APP/functions/control_temp.o APP/functions/control_temp.o:  \
- ../APP/functions/control_temp.c ../APP/functions/../main.h \
+APP/functions/show_temp.o APP/functions/show_temp.o:  \
+ ../APP/functions/show_temp.c ../APP/functions/../main.h \
   ../APP/functions/../../ECUAL/Keypad/Keypad_Interface.h \
   ../APP/functions/../../ECUAL/Keypad/../../Library/Std.h \
   ../APP/functions/../../ECUAL/Keypad/../../Library/ERROR_STATE.h \

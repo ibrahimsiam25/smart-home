@@ -36,10 +36,11 @@ void showOptions(u8 selectedRoom) {
             switch (key) {
                 case 'C':
                     LCD_CLR();
-                    showOptions(selectedRoom); // Clear and show options again
+                    showRoomSelection();
+                    isLoggedOut = 1;
                     break;
                 case '1':
-                    controlTemp();
+                    controlTemp(selectedRoom,0);
                     break;
                 case '2':
                     controlMotor(selectedRoom);
