@@ -7,13 +7,15 @@
 #define ID_ARRAY { "111", "222" }
 #define PASSWORD_ARRAY { "111", "222" }
 
+u8 selectedRoom = 0;
 u8 numberOfLogins = 0;
 char id[ID_LENGTH + 1] = "";
-    char password[PASSWORD_LENGTH + 1] = "";
+char password[PASSWORD_LENGTH + 1] = "";
 
 int main() {
     initializeSystem();
-    myAPP();
+    displayWelcomeMessage();
+    showRoomSelection();
     return 0;
 }
 
@@ -34,6 +36,7 @@ void myAPP(){
 void initializeSystem(void) {
     LCD_8_bit_init();
     Keypad_enu_Init();
+    USART_voidINIT();
     // Initialize other peripherals
 
    // DIO_init(PORT_A, PIN1, OUT);
@@ -109,20 +112,50 @@ void displayMaxLoginAttemptsReached() {
     _delay_ms(100);
 }
 
+
+//******************************************************//
+
+
 void displayWelcomeMessage() {
-	 LCD_CLR();
-    LCD_8_bit_sendString("Welcome");
-    _delay_ms(100);
-    LCD_CLR();
+    USART_VoidSendString((u8*)"Welcome\r\n");
+    _delay_ms(500);
+}
+
+void showRoomSelection() {
+    USART_VoidSendString((u8*)"Select a room:\r\n");
+    USART_VoidSendString((u8*)"1: Room 1\r\n");
+    USART_VoidSendString((u8*)"2: Room 2\r\n");
+
+    while (selectedRoom == 0) {
+        u8 key;
+        if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
+            switch (key) {
+                case '1':
+                    selectedRoom = 1;
+                    LCD_CLR();
+                    LCD_8_bit_sendString("Room 1");
+                    USART_VoidSendString((u8*)"Room 1 Selected\r\n");
+                    showOptions();
+                    break;
+                case '2':
+                    selectedRoom = 2;
+                    LCD_CLR();
+                    LCD_8_bit_sendString("Room 2");
+                    USART_VoidSendString((u8*)"Room 2 Selected\r\n");
+                    showOptions();
+                    break;
+                default:
+                    USART_VoidSendString((u8*)"Invalid selection, try again\r\n");
+                    break;
+            }
+        }
+    }
 }
 
 void showOptions() {
-    LCD_CLR();
-    LCD_8_bit_sendString("1:Temp, ");
-    LCD_8_bit_sendString("2:Motors");
-    LCD_8_bit_GoToPos(1, 0);
-    LCD_8_bit_sendString("3:LEDs, ");
-    LCD_8_bit_sendString("4:Logout");
+    USART_VoidSendString((u8*)"1:Temp, 2:Motors,");
+    USART_VoidSendString((u8*)" 3:LEDs, 4:Logout,");
+    USART_VoidSendString((u8*)" 5:CLR");
 
     u8 isLoggedOut = 0;
 
@@ -131,51 +164,19 @@ void showOptions() {
         if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
             switch (key) {
                 case '1':
-                    showTemp();
+                    controlTemp();
                     break;
                 case '2':
-                    controlWithMotor();
+                    controlMotor();
                     break;
                 case '3':
-                    controlWithLEDs();
+                    controlLED();
                     break;
                 case '4':
-                	myAPP();
+                    myAPP();
                     break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    LCD_CLR();
-}
-
-void controlWithLEDs() {
-    LCD_CLR();
-    LCD_8_bit_sendString("1:Green,");
-    LCD_8_bit_sendString("2:Red");
-    LCD_8_bit_GoToPos(1, 0);
-    LCD_8_bit_sendString("3:Blue,");
-    LCD_8_bit_sendString("4:Back");
-
-    u8 returnToMain = 0;
-
-    while (!returnToMain) {
-        u8 key;
-        if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
-            switch (key) {
-                case '1':
-                    DIO_toggle(PORT_C, PIN3);
-                    break;
-                case '2':
-                    DIO_toggle(PORT_C, PIN7);
-                    break;
-                case '3':
-                    DIO_toggle(PORT_A, PIN1);
-                    break;
-                case '4':
-                    returnToMain = 1;
+                case 'C':
+                    LCD_CLR();
                     showOptions();
                     break;
                 default:
@@ -185,67 +186,138 @@ void controlWithLEDs() {
     }
 }
 
-void controlWithMotor() {
-    LCD_CLR();
+void controlMotor() {
+    USART_VoidSendString((u8*)"1:Motor ON, 2:Motor OFF\n");
 
-    LCD_8_bit_sendString("1:FAN+, ");
-    LCD_8_bit_sendString("2:FAN-");
-    LCD_8_bit_GoToPos(1, 0);
-    LCD_8_bit_sendString("3:Motor,");
-    LCD_8_bit_sendString("4:Back");
+    u8 motorControl = 1;
 
-    u8 returnToMain = 0;
-
-    while (!returnToMain) {
+    while (motorControl) {
         u8 key;
         if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
-            switch (key) {
-                case '1':
-                    DIO_write(PORT_C, PIN5, HIGH);
-                    DIO_write(PORT_C, PIN6, LOW);
-                    break;
-                case '2':
-                    DIO_write(PORT_C, PIN6, HIGH);
-                    DIO_write(PORT_C, PIN5, LOW);
-                    break;
-                case '3':
-                    DIO_toggle(PORT_C, PIN4);
-                    break;
-                case '4':
-                    returnToMain = 1;
-                    showOptions();
-                    break;
-                default:
-                    break;
+            if (key == 'C') {
+                motorControl = 0;
+                showOptions();
+            } else {
+                switch (key) {
+                    case '1':
+                        if (selectedRoom == 1) {
+                            DIO_write(PORT_A, PIN1, HIGH);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("Motor 1 ON");
+                        } else if (selectedRoom == 2) {
+                            DIO_write(PORT_A, PIN0, HIGH);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("Motor 2 ON");
+                        }
+                        USART_VoidSendString((u8*)"Motor ON\n");
+                        break;
+                    case '2':
+                        if (selectedRoom == 1) {
+                            DIO_write(PORT_A, PIN1, LOW);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("Motor 1 OFF");
+                        } else if (selectedRoom == 2) {
+                            DIO_write(PORT_A, PIN0, LOW);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("Motor 2 OFF");
+                        }
+                        USART_VoidSendString((u8*)"Motor OFF\n");
+                        motorControl = 0;
+                        showOptions();
+                        break;
+                    default:
+                        USART_VoidSendString((u8*)"Invalid selection, try again\n");
+                        break;
+                }
             }
         }
     }
 }
 
-void showTemp() {
-    LCD_CLR();
+void controlLED() {
+    USART_VoidSendString((u8*)"1:LED ON, 2:LED OFF\n");
 
-    u8 returnToMain = 0;
-    u16 analog_value;
-	char buffer[10];
+    u8 ledControl = 1;
 
-	LCD_8_bit_GoToPos(1, 0);
-	LCD_8_bit_sendString("1:back");
-
-    while (!returnToMain) {
-   	 analog_value = ADC_u16GetChannalResult(2);
-       itoa(analog_value, buffer, 10);
-   	LCD_8_bit_sendString(buffer);
-    LCD_CLR();
+    while (ledControl) {
         u8 key;
         if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
-            switch (key) {
-                case '1':
-                	showOptions();
-                    break;
-                default:
-                    break;
+            if (key == 'C') {
+                ledControl = 0;
+                showOptions();
+            } else {
+                switch (key) {
+                    case '1':
+                        if (selectedRoom == 1) {
+                            DIO_write(PORT_A, PIN5, HIGH);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("LED 1 ON");
+                        } else if (selectedRoom == 2) {
+                            DIO_write(PORT_A, PIN0, HIGH);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("LED 2 ON");
+                        }
+                        USART_VoidSendString((u8*)"LED ON\n");
+                        break;
+
+                    case '2':
+                        if (selectedRoom == 1) {
+                            DIO_write(PORT_A, PIN5, LOW);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("LED 1 OFF");
+                        } else if (selectedRoom == 2) {
+                            DIO_write(PORT_A, PIN0, LOW);
+                            LCD_8_bit_GoToPos(1, 0);
+                            LCD_8_bit_sendString("LED 2 OFF");
+                        }
+                        USART_VoidSendString((u8*)"LED OFF\n");
+                        ledControl = 0;
+                        showOptions();
+                        break;
+                    default:
+                        USART_VoidSendString((u8*)"Invalid selection, try again\n");
+                        break;
+                }
             }
         }
     }
 }
+//***********************************************************************??
+void controlTemp() {
+    LCD_CLR();
+    LCD_8_bit_sendString("Temperature sensor on");
+
+    DIO_write(PORT_A, PIN0, HIGH); // Assume sensor activation or an indicator LED is on PIN0
+    DIO_write(PORT_A, PIN3, HIGH); // Assume another device is on PIN3
+
+    u8 tempControl = 1;
+
+    while (tempControl) {
+        u8 key;
+        u16 adcValue =  ADC_u16GetChannalResult(2);
+        float temperature = (adcValue / 1024.0) * 500.0; // Convert ADC reading to temperature in Celsius (assuming LM35)
+
+        if (temperature > 30.0) {
+            DIO_write(PORT_A, PIN0, HIGH); // Assume the buzzer is connected to PORT_B and PIN0
+            DIO_write(PORT_A, PIN3, HIGH); // Assume the lamp is connected to PORT_C and PIN3
+            LCD_8_bit_GoToPos(1, 0);
+            LCD_8_bit_sendString("High Temp Alert!"); // Display high temperature alert
+        } else {
+            DIO_write(PORT_A, PIN0, LOW); // Turn off buzzer
+            DIO_write(PORT_A, PIN3, LOW); // Turn off lamp
+        }
+
+        if (Keypad_enu_getKey(&key) == STATE_OK && key != KEYPAD_U8_NO_KEY_PRESSED) {
+            if (key == 'C') {
+                DIO_write(PORT_A, PIN0, LOW);
+                DIO_write(PORT_A, PIN3, LOW);
+                tempControl = 0;
+                showOptions(); // Return to main options menu
+            }
+        }
+
+        _delay_ms(30000); // Delay to allow time between readings
+    }
+}
+
+
