@@ -26,7 +26,7 @@ void showOptions(u8 selectedRoom) {
     displayRoomSelection(selectedRoom); // Display room on LCD and USART
 
     USART_VoidSendString((u8*)"1:Temp, 2:Motors,");
-    USART_VoidSendString((u8*)" 3:LEDs, 4:back,");
+    USART_VoidSendString((u8*)" 3:LEDs, 4:back\r\n");
     u8 isClicked =0;
     u8 isLoggedOut = 0;
 
