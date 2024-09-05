@@ -20,6 +20,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+APP/functions \
 APP \
 ECUAL/Keypad \
 ECUAL/LCD \

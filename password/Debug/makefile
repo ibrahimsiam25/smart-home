@@ -13,6 +13,7 @@ RM := rm -rf
 -include MCAL/ADC/subdir.mk
 -include ECUAL/LCD/subdir.mk
 -include ECUAL/Keypad/subdir.mk
+-include APP/functions/subdir.mk
 -include APP/subdir.mk
 -include subdir.mk
 -include objects.mk
