@@ -29,7 +29,6 @@ void controlTemp(u8 selectedRoom,u8 flag) {
     	  displayTemperature(analog_value);
       }
 
-      button( selectedRoom);
        controlHeater(selectedRoom,analog_value );
     }
 }
@@ -44,42 +43,25 @@ void displayTemperature(u16 analog_value) {
     LCD_8_bit_sendString(" C");
     _delay_ms(500);
 }
-void button(u8 selectedRoom){
-	DIO_write(PORT_A, PIN4, HIGH);
-	DIO_write(PORT_D, PIN6, HIGH);
-	   if (selectedRoom == 1) {
-		u8 buttonValue=   DIO_read(PORT_A, PIN4);
-		   if(buttonValue){
-			   DIO_write(PORT_A, PIN3, LOW);
-		   }else{
-			   DIO_write(PORT_A, PIN3, HIGH);
-		   }
-	        }else if(selectedRoom == 2) {
-	    		u8 buttonValue=   DIO_read(PORT_D, PIN6);
-	    		   if(buttonValue){
-	    			   DIO_write(PORT_D, PIN5, LOW);
-	    		   }else{
-	    			   DIO_write(PORT_D, PIN5, HIGH);
-	    		   }
-	    	        }
-}
+
 
 void controlHeater(u8 selectedRoom, int temperature) {
-    if (temperature > 30) {
+	DIO_write(PORT_A, PIN4, HIGH);
+	DIO_write(PORT_D, PIN5, HIGH);
+    u8 buttonValueRoom1 = DIO_read(PORT_A, PIN4);
+    u8 buttonValueRoom2 = DIO_read(PORT_D, PIN6);
 
-        if (selectedRoom == 1) {
-            DIO_write(PORT_A, PIN3, HIGH);
-        } else if (selectedRoom == 2) {
-            DIO_write(PORT_D, PIN5, HIGH);
-        }
-    } else {
+    // Check for Room 1
+    if (selectedRoom == 1 && (!buttonValueRoom1 || temperature > 30)) {
+        DIO_write(PORT_A, PIN3, HIGH);  // Turn on heater in Room 1
+    } else if (selectedRoom == 1) {
+        DIO_write(PORT_A, PIN3, LOW);   // Turn off heater in Room 1
+    }
 
-        if (selectedRoom == 1) {
-
-            DIO_write(PORT_A, PIN3, LOW);
-        } else if (selectedRoom == 2) {
-
-            DIO_write(PORT_D, PIN5, LOW);
-        }
+    // Check for Room 2
+    if (selectedRoom == 2 && (!buttonValueRoom2 || temperature > 30)) {
+        DIO_write(PORT_D, PIN5, HIGH);  // Turn on heater in Room 2
+    } else if (selectedRoom == 2) {
+        DIO_write(PORT_D, PIN5, LOW);   // Turn off heater in Room 2
     }
 }

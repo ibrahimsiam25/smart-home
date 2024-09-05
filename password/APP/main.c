@@ -12,8 +12,7 @@ char password[PASSWORD_LENGTH + 1] = "";
 
 int main() {
     initializeSystem();
-    controlTemp(1,0);
-    //myAPP();
+    myAPP();
     return 0;
 }
 

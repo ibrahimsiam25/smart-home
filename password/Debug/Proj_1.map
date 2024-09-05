@@ -186,7 +186,7 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x400a
+.text           0x00000000     0x3fb2
  *(.vectors)
  .vectors       0x00000000       0x54 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -449,67 +449,65 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00003426       0x28 ./APP/functions/show_temp.o
                 0x00003426                getChannelForRoom
  .text.controlTemp
-                0x0000344e       0xdc ./APP/functions/show_temp.o
+                0x0000344e       0xd2 ./APP/functions/show_temp.o
                 0x0000344e                controlTemp
  .text.displayTemperature
-                0x0000352a      0x146 ./APP/functions/show_temp.o
-                0x0000352a                displayTemperature
- .text.button   0x00003670       0x88 ./APP/functions/show_temp.o
-                0x00003670                button
+                0x00003520      0x146 ./APP/functions/show_temp.o
+                0x00003520                displayTemperature
  .text.controlHeater
-                0x000036f8       0x6e ./APP/functions/show_temp.o
-                0x000036f8                controlHeater
- .text.main     0x00003766       0x22 ./APP/main.o
-                0x00003766                main
- .text.myAPP    0x00003788      0x162 ./APP/main.o
-                0x00003788                myAPP
+                0x00003666       0xb0 ./APP/functions/show_temp.o
+                0x00003666                controlHeater
+ .text.main     0x00003716       0x1a ./APP/main.o
+                0x00003716                main
+ .text.myAPP    0x00003730      0x162 ./APP/main.o
+                0x00003730                myAPP
  .text.initializeSystem
-                0x000038ea       0x6e ./APP/main.o
-                0x000038ea                initializeSystem
- .text.libgcc   0x00003958        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x00003958        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x00003958        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x00003958       0x38 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x00003958                __prologue_saves__
- .text.libgcc   0x00003990       0x36 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x00003990                __epilogue_restores__
+                0x00003892       0x6e ./APP/main.o
+                0x00003892                initializeSystem
+ .text.libgcc   0x00003900        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00003900        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00003900        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00003900       0x38 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00003900                __prologue_saves__
+ .text.libgcc   0x00003938       0x36 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x00003938                __epilogue_restores__
  .text.avr-libc
-                0x000039c6       0x12 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
-                0x000039c6                strcmp
+                0x0000396e       0x12 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+                0x0000396e                strcmp
  .text.avr-libc
-                0x000039d8       0x42 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
-                0x000039d8                itoa
+                0x00003980       0x42 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+                0x00003980                itoa
  .text.avr-libc
-                0x00003a1a       0x62 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(snprintf.o)
-                0x00003a1a                snprintf
+                0x000039c2       0x62 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(snprintf.o)
+                0x000039c2                snprintf
  .text.avr-libc
-                0x00003a7c       0x48 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00003a7c                sprintf
+                0x00003a24       0x48 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00003a24                sprintf
  .text.avr-libc
-                0x00003ac4      0x3ba d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00003ac4                vfprintf
+                0x00003a6c      0x3ba d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x00003a6c                vfprintf
  .text.avr-libc
-                0x00003e7e       0x16 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00003e7e                strnlen_P
+                0x00003e26       0x16 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00003e26                strnlen_P
  .text.avr-libc
-                0x00003e94       0x16 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00003e94                strnlen
+                0x00003e3c       0x16 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00003e3c                strnlen
  .text.avr-libc
-                0x00003eaa       0x20 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
-                0x00003eaa                strrev
+                0x00003e52       0x20 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+                0x00003e52                strrev
  .text.avr-libc
-                0x00003eca       0x58 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00003eca                fputc
+                0x00003e72       0x58 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x00003e72                fputc
  .text.avr-libc
-                0x00003f22       0xbc d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x00003f22                __ultoa_invert
- .text.libgcc   0x00003fde       0x28 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x00003fde                __udivmodhi4
-                0x00004006                . = ALIGN (0x2)
+                0x00003eca       0xbc d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x00003eca                __ultoa_invert
+ .text.libgcc   0x00003f86       0x28 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x00003f86                __udivmodhi4
+                0x00003fae                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00004006        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00004006                exit
-                0x00004006                _exit
+ .fini9         0x00003fae        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00003fae                exit
+                0x00003fae                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -528,11 +526,11 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00004006        0x4 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00003fae        0x4 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000400a                _etext = .
+                0x00003fb2                _etext = .
 
-.data           0x00800060      0x328 load address 0x0000400a
+.data           0x00800060      0x328 load address 0x00003fb2
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -656,8 +654,8 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  COMMON         0x00800389       0x14 ./MCAL/UART/USART_program.o
                 0x00800389                STRING
                 0x0080039d                PROVIDE (__bss_end, .)
-                0x0000400a                __data_load_start = LOADADDR (.data)
-                0x00004332                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00003fb2                __data_load_start = LOADADDR (.data)
+                0x000042da                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080039d        0x0
                 0x0080039d                PROVIDE (__noinit_start, .)
@@ -682,7 +680,7 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x3f90
+.stab           0x00000000     0x3ed0
  *(.stab)
  .stab          0x00000000      0x360 ./MCAL/UART/USART_program.o
  .stab          0x00000360      0x4d4 ./MCAL/DIO/DIO.o
@@ -703,14 +701,14 @@ LOAD d:/setup/z/sdk_win_64/winavr/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                                 0x570 (size before relaxing)
  .stab          0x000031d4      0x408 ./APP/functions/show_options.o
                                 0x648 (size before relaxing)
- .stab          0x000035dc      0x5a0 ./APP/functions/show_temp.o
-                                0x7e0 (size before relaxing)
- .stab          0x00003b7c      0x414 ./APP/main.o
+ .stab          0x000035dc      0x4e0 ./APP/functions/show_temp.o
+                                0x720 (size before relaxing)
+ .stab          0x00003abc      0x414 ./APP/main.o
                                 0x5ac (size before relaxing)
 
-.stabstr        0x00000000     0x1a96
+.stabstr        0x00000000     0x1aa3
  *(.stabstr)
- .stabstr       0x00000000     0x1a96 ./MCAL/UART/USART_program.o
+ .stabstr       0x00000000     0x1aa3 ./MCAL/UART/USART_program.o
 
 .stab.excl
  *(.stab.excl)
